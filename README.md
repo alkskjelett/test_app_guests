@@ -1,4 +1,5 @@
 Тестовый проект - CRUD гостей.
+
 Чтобы развернуть проект неоходимо выполнить: docker compose -f docker/local/docker-compose.yml up -d --build
 
 Сервер работает на http://localhost:8080/
