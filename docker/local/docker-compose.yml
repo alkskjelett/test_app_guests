@@ -1,0 +1,40 @@
+version: "3"
+services:
+  php:
+    build:
+       context: ../..
+       dockerfile: docker/local/php/Dockerfile
+    container_name: test-app-bon
+    hostname: test-app-bon
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    environment:
+      PORT: 8080
+    volumes:
+      - ../../:/var/www
+    networks:
+      - test
+
+  db:
+    image: postgres:latest
+    container_name: test-db-bon
+    hostname: test-db-bon
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_DB: $DATABASE_NAME
+    volumes:
+      - dbdata:/var/lib/postgresql/data:rw
+    ports:
+      - '$DATABASE_PORT:5432'
+    networks:
+      - test
+
+volumes:
+  dbdata:
+
+networks:
+  test:
+    driver: bridge
